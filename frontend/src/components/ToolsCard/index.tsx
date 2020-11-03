@@ -3,22 +3,31 @@ import { FiX } from 'react-icons/fi';
 import Button from '../Button';
 import { Card } from './styles';
 
-const ToolsCard: React.FC = () => (
-  <Card>
+interface toolsProps {
+  id: number;
+  title: string;
+  link: string;
+  description: string;
+  tags: [prop: string];
+}
+
+interface ToolsCardProps {
+  toolDetail: toolsProps;
+}
+
+const ToolsCard: React.FC<ToolsCardProps> = ({ toolDetail }) => (
+  <Card key={toolDetail.id}>
     <header>
       <a href="/">
-        <h3>Notion</h3>
+        <h3>{toolDetail.title}</h3>
       </a>
       <Button type="submit" className="remove">
         <FiX size={20} />
         remove
       </Button>
     </header>
-    <p>
-      All in one tool to organize teams and ideas. Write, plan, collaborate, and
-      get organized.
-    </p>
-    <strong>#organization #planning #collaboration #writing #calendar</strong>
+    <p>{toolDetail.description}</p>
+    <strong>{toolDetail.tags}</strong>
   </Card>
 );
 
