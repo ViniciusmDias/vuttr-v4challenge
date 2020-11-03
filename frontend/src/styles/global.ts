@@ -55,12 +55,25 @@ export default createGlobalStyle`
   }
 
   p {
-    font-size: 0.9rem;
+    font-size: 1rem;
     letter-spacing: 0.36px;
   }
 
   button {
     cursor: pointer
+  }
+
+  a, button {
+    opacity: 1;
+    transition: 0.4s ease-in-out opacity;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  strong {
+    font-size: 1rem;  
   }
 
   @media (min-width: 800px) {
