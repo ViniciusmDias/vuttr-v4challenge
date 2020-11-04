@@ -22,6 +22,7 @@
     "no-children-prop": "off",
     "react/jsx-props-no-spreading": "off",
     "no-alert": "off",
+    "no-console": "off",
     "react/jsx-filename-extension": [
       1,
       {
