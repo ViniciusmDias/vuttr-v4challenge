@@ -16,6 +16,13 @@
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "jsx-a11y/label-has-associated-control": "off",
+    "object-curly-newline": "off",
+    "react/prop-types": "off",
+    "no-children-prop": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-alert": "off",
+    "no-console": "off",
     "react/jsx-filename-extension": [
       1,
       {
