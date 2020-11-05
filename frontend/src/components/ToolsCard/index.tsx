@@ -15,21 +15,27 @@ export interface toolsProps {
 
 export interface ToolsCardProps {
   toolDetail: toolsProps;
-  tools: toolsProps[];
-  setTools: Function;
+  toolsData: toolsProps[];
+  setToolsData: Function;
 }
 
 const ToolsCard: React.FC<ToolsCardProps> = ({
-  toolDetail,
-  tools,
-  setTools,
+  toolDetail = {
+    id: 0,
+    title: 'string',
+    link: 'string',
+    description: 'string',
+    tags: [''],
+  },
+  toolsData,
+  setToolsData,
 }) => {
   const { addToast } = useToast();
 
   async function handleDeleteTool(id: number) {
     try {
       await api.delete(`/tools/${id}`);
-      setTools(tools.filter((tool) => tool.id !== id));
+      setToolsData(toolsData.filter((tool) => tool.id !== id));
       addToast({
         type: 'success',
         title: 'Tool deleted',
@@ -43,7 +49,7 @@ const ToolsCard: React.FC<ToolsCardProps> = ({
   return (
     <Card data-testid="container-tools-card" key={toolDetail.id}>
       <header>
-        <a href="/">
+        <a href={toolDetail.link}>
           <h3>{toolDetail.title}</h3>
         </a>
         <Button

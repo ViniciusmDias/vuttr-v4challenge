@@ -9,7 +9,6 @@ export interface ToastMessage {
   description?: string;
 }
 interface ToastContextData {
-  // eslint-disable-next-line no-unused-vars
   addToast(message: Omit<ToastMessage, 'id'>): void;
   removeToast(id: string): void;
 }

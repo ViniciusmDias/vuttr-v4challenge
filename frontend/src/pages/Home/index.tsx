@@ -1,43 +1,17 @@
-import React, { FormEvent, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { MdAdd } from 'react-icons/md';
 import Loading from '../../components/Loading';
-import ToolsCard from '../../components/ToolsCard';
+import ToolsCard, { toolsProps } from '../../components/ToolsCard';
 import api from '../../services/api';
-import Button from '../../components/Button';
-import { useToast } from '../../hooks/toast';
+import Modal from '../../components/Modal';
 
-import {
-  Container,
-  Header,
-  SearchBar,
-  ListTools,
-  Modal,
-  Form,
-  Error,
-} from './styles';
-
-interface toolsProps {
-  id: number;
-  title: string;
-  link: string;
-  description: string;
-  tags: [prop: string];
-}
+import { Container, Header, SearchBar, ListTools } from './styles';
 
 const Home: React.FC = () => {
   const [toolsData, setToolsData] = useState<toolsProps[]>([]);
   const [checkboxSelected, setCheckboxSelected] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState(false);
-  const { addToast } = useToast();
-
-  // modal
-  const [title, setTitle] = useState('');
-  const [link, setLink] = useState('');
-  const [description, setDescription] = useState('');
-  const [tags, setTags] = useState('');
-  const [inputError, setInputError] = useState('');
-  const [tools, setTools] = useState<toolsProps[]>([]);
+  const [addFormIsOpen, setAddFormIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null as any);
 
   useEffect(() => {
@@ -46,7 +20,7 @@ const Home: React.FC = () => {
       setToolsData(response.data);
     });
     setLoading(false);
-  }, [tools]);
+  }, [toolsData]);
 
   async function handleSearchTool(value: string): Promise<void> {
     if (checkboxSelected) {
@@ -69,113 +43,25 @@ const Home: React.FC = () => {
   }
 
   function handleToggleForm() {
-    if (!form) {
+    if (!addFormIsOpen) {
       containerRef.current.style.opacity = '1';
       containerRef.current.style.visibility = 'visible';
-      return setForm(!form);
+      return setAddFormIsOpen(!addFormIsOpen);
     }
     containerRef.current.style.opacity = '0';
     containerRef.current.style.visibility = 'hidden';
 
-    return setForm(!form);
-  }
-
-  // modal
-  async function handleAddTool(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
-    event.preventDefault();
-
-    if (!title || !link || !tags) {
-      setInputError('Fill the required values');
-      return;
-    }
-
-    const tagsArray = tags.split(' ');
-
-    try {
-      const response = await api.post<toolsProps>('tools', {
-        title,
-        link,
-        description,
-        tags: tagsArray,
-      });
-
-      const toolAdded = response.data;
-
-      console.log(toolAdded);
-
-      setTools([...tools, toolAdded]);
-      setTitle('');
-      setLink('');
-      setDescription('');
-      setTags('');
-      handleToggleForm();
-
-      addToast({
-        type: 'success',
-        title: 'Tool added',
-        description:
-          'You added a new tool and it moved to the bottom of the list',
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    return setAddFormIsOpen(!addFormIsOpen);
   }
 
   return (
     <>
-      <Modal ref={containerRef}>
-        <Form hasError={!!inputError} onSubmit={handleAddTool}>
-          <div>
-            <MdAdd size={24} color="#000" />
-            <h3>Add new tool</h3>
-          </div>
-
-          <label htmlFor="name">
-            Tool Name (*required)
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              name="name"
-            />
-          </label>
-          <label htmlFor="link">
-            Tool Link (*required)
-            <input
-              name="link"
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-            />
-          </label>
-          <label htmlFor="description">
-            Tool Description
-            <textarea
-              name="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={3}
-            />
-          </label>
-          <label htmlFor="tags">
-            Tags (*required)
-            <input
-              name="tags"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              type="text"
-            />
-          </label>
-          {inputError && <Error>{inputError}</Error>}
-
-          <div className="buttons">
-            <Button type="submit" test-id="submit-button">
-              Add tool
-            </Button>
-            <Button onClick={handleToggleForm}>Cancel</Button>
-          </div>
-        </Form>
-      </Modal>
+      <Modal
+        handleToggleForm={handleToggleForm}
+        toolsData={toolsData}
+        setToolsData={setToolsData}
+        containerRef={containerRef}
+      />
       <Container>
         <Header>
           <h1>VUTTR</h1>
@@ -210,8 +96,8 @@ const Home: React.FC = () => {
               <ToolsCard
                 key={tool.id}
                 toolDetail={tool}
-                tools={tools}
-                setTools={setTools}
+                toolsData={toolsData}
+                setToolsData={setToolsData}
               />
             ))
           )}
