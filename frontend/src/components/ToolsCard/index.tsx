@@ -10,7 +10,7 @@ export interface toolsProps {
   title: string;
   link: string;
   description: string;
-  tags: [prop: string];
+  tags: string[];
 }
 
 export interface ToolsCardProps {

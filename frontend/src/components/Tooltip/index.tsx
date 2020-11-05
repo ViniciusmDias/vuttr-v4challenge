@@ -12,7 +12,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   className = '',
   children,
 }) => (
-  <Container className={className}>
+  <Container className={className} data-testid="tooltip-container">
     {children}
     <span>{title}</span>
   </Container>

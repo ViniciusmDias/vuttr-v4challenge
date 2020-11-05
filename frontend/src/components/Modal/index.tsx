@@ -11,7 +11,7 @@ interface modalProps {
   handleToggleForm: Function;
   toolsData: toolsProps[];
   setToolsData: Function;
-  containerRef: React.MutableRefObject<HTMLDivElement>;
+  containerRef?: React.MutableRefObject<HTMLDivElement>;
 }
 
 const Modal: React.FC<modalProps> = ({
@@ -68,7 +68,7 @@ const Modal: React.FC<modalProps> = ({
   }
 
   return (
-    <ModalContainer ref={containerRef}>
+    <ModalContainer ref={containerRef} data-testid="modal-container">
       <Form hasError={!!inputError} onSubmit={handleAddTool}>
         <div>
           <MdAdd size={24} color="#000" />
