@@ -38,21 +38,6 @@ export const Header = styled.header`
   h2 {
     margin-bottom: 4vh;
   }
-
-  button {
-    width: 25%;
-    height: 2.5rem;
-    display: flex;
-    font-weight: 600;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    background-color: #365df0;
-    border-radius: 0.25rem;
-    padding: 1.5vh 2vh;
-    cursor: pointer;
-    margin-bottom: 1vh;
-  }
 `;
 
 export const SearchBar = styled.form`
@@ -75,12 +60,13 @@ export const SearchBar = styled.form`
   }
 
   input[type='text'] {
-    background: #f5f4f6 0% 0% no-repeat padding-box;
-    border: 1px solid #ebeaed;
+    background: var(--e-global-color-primary) 0% 0% no-repeat padding-box;
+    border: 1px solid var(--e-global-color-text);
     border-radius: 0.25rem;
     padding: 1.5vh 2vh;
     height: 2.5rem;
     margin-bottom: 1vh;
+    color: var(--e-global-color-white);
   }
 
   label {
@@ -104,5 +90,3 @@ export const ListTools = styled.section`
   flex-direction: column;
   margin: 2vh 0;
 `;
-
-// modal

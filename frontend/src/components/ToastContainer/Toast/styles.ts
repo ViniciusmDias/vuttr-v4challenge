@@ -7,16 +7,16 @@ interface ContainerProps {
 }
 const toastTypeVariations = {
   info: css`
-    background: #ebf8ff;
-    color: #3172b7;
+    background: var(--e-global-color-background);
+    color: var(--e-global-color-text);
   `,
   success: css`
-    background: #e6fffa;
-    color: #2e656a;
+    background: var(--e-global-color-white);
+    color: var(--e-global-color-secondary);
   `,
   error: css`
-    background: #fddede;
-    color: #c53030;
+    background: var(--e-global-color-white);
+    color: var(--e-global-color-primary);
   `,
 };
 
@@ -44,7 +44,7 @@ export const Container = styled(animated.div)<ContainerProps>`
 
     p {
       margin-top: 4px;
-      font-size: 14px;
+      font-size: 0.7rem;
     }
   }
   button {

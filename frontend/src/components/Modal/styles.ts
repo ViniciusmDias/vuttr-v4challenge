@@ -43,7 +43,7 @@ export const Form = styled.form<FormProps>`
     ${(props) =>
     props.hasError &&
       css`
-        border-color: #c53030;
+        border-color: var(--e-global-color-primary);
       `}
   }
 
@@ -66,6 +66,6 @@ export const Form = styled.form<FormProps>`
 
 export const Error = styled.span`
   display: block;
-  color: #c53030;
+  color: var(--e-global-color-primary);
   margin-top: 8px;
 `;

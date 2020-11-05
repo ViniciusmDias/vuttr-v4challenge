@@ -111,9 +111,7 @@ const Modal: React.FC<modalProps> = ({
         {inputError && <Error>{inputError}</Error>}
 
         <div className="buttons">
-          <Button type="submit" test-id="submit-button">
-            Add tool
-          </Button>
+          <Button type="submit">Add tool</Button>
           <Button onClick={() => handleToggleForm()}>Cancel</Button>
         </div>
       </Form>

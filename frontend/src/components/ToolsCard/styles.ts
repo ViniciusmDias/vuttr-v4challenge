@@ -6,9 +6,9 @@ export const Card = styled.article`
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 1.5vh 2vh;
-  border: 3px solid #000;
+  border: 3px solid var(--e-global-color-text);
   margin-bottom: 2vh;
-  background-color: #fff;
+  background-color: var(--e-global-color-white);
   border-radius: 0.25rem;
 
   header {
@@ -20,7 +20,7 @@ export const Card = styled.article`
       flex: 1;
       display: flex;
       align-items: center;
-      color: #365df0;
+      color: var(--e-global-color-primary);
     }
 
     button {
@@ -30,11 +30,11 @@ export const Card = styled.article`
       border: 0;
       padding-right: 0;
       padding-left: 0;
-      background-color: #fff;
-      color: #170c3a;
+      background-color: transparent;
+      color: var(--e-global-color-secondary);
 
       svg {
-        margin: 0 1vh 0 0;
+        margin: 0.5vh 1vh 0 0;
         font-weight: 600;
       }
     }

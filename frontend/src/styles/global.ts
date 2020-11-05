@@ -4,10 +4,11 @@ export default createGlobalStyle`
 
   html {
     font-size: 16px;
-    --e-global-color-primary: #170C3A;
-    --e-global-color-secondary: #54595F;
-    --e-global-color-text: #7A7A7A;
-    --e-global-color-background: #eeeeee;
+    --e-global-color-primary: rgb(223, 046, 048);
+    --e-global-color-secondary: rgb(000, 178, 051);
+    --e-global-color-text: rgb(53,51,51);
+    --e-global-color-background:rgb(225,224,224) ;
+    --e-global-color-white:rgb(250,250,250) ;
   }
 
   * {
@@ -20,13 +21,21 @@ export default createGlobalStyle`
   }
   
   body, input, button {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Questria', sans-serif;
     background: var(--e-global-color-background);
-    color: var(--e-global-color-primary);
+    color: var(--e-global-color-text);
     text-align: left;
     font-weight: 400;
     letter-spacing: 0.4px; 
     font-size: 1rem;
+  }
+
+  h1,h2,h3,h4,button, a {
+    font-family: 'Open Sans', sans-serif;
+  }
+  strong {
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 0.26px
   }
 
   h1 {
@@ -57,6 +66,7 @@ export default createGlobalStyle`
   p {
     font-size: 1rem;
     letter-spacing: 0.36px;
+    margin-bottom: 1vh;
   }
 
   button {

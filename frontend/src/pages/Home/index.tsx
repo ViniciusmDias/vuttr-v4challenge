@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { MdAdd } from 'react-icons/md';
 import Loading from '../../components/Loading';
 import ToolsCard, { toolsProps } from '../../components/ToolsCard';
+import Button from '../../components/Button';
 import api from '../../services/api';
 import Modal from '../../components/Modal';
 
@@ -20,7 +21,7 @@ const Home: React.FC = () => {
       setToolsData(response.data);
     });
     setLoading(false);
-  }, [toolsData]);
+  }, []);
 
   async function handleSearchTool(value: string): Promise<void> {
     if (checkboxSelected) {
@@ -83,12 +84,15 @@ const Home: React.FC = () => {
               />
             </label>
           </SearchBar>
-          <button type="button" onClick={handleToggleForm}>
-            <MdAdd size={28} color="#ffffff" />
+          <Button type="button" onClick={handleToggleForm}>
+            <MdAdd size={28} />
             Add
-          </button>
+          </Button>
         </Header>
         <ListTools>
+          {toolsData.length === 0 && (
+            <p>Nenhuma nenhuma ferramenta cadastrada</p>
+          )}
           {loading ? (
             <Loading />
           ) : (
