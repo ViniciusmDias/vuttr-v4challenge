@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from 'react';
 import { MdAdd } from 'react-icons/md';
 import api from '../../services/api';
 import Button from '../Button';
+import Tooltip from '../Tooltip';
 import { toolsProps } from '../ToolsCard';
 import { ModalContainer, Form, Error } from './styles';
 import { useToast } from '../../hooks/toast';
@@ -80,14 +81,18 @@ const Modal: React.FC<modalProps> = ({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             name="name"
+            required
           />
         </label>
         <label htmlFor="link">
           Tool Link (*required)
           <input
+            type="url"
             name="link"
+            pattern="https://.*"
             value={link}
             onChange={(e) => setLink(e.target.value)}
+            required
           />
         </label>
         <label htmlFor="description">
@@ -101,11 +106,13 @@ const Modal: React.FC<modalProps> = ({
         </label>
         <label htmlFor="tags">
           Tags (*required)
+          <Tooltip title="Each tag must be separated by space" />
           <input
             name="tags"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             type="text"
+            required
           />
         </label>
         {inputError && <Error>{inputError}</Error>}
