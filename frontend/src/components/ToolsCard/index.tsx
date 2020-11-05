@@ -4,7 +4,7 @@ import api from '../../services/api';
 import Button from '../Button';
 import { Card } from './styles';
 
-interface toolsProps {
+export interface toolsProps {
   id: number;
   title: string;
   link: string;
@@ -12,21 +12,24 @@ interface toolsProps {
   tags: [prop: string];
 }
 
-interface ToolsCardProps {
+export interface ToolsCardProps {
   toolDetail: toolsProps;
 }
 
-const ToolsCard: React.FC<ToolsCardProps> = ({ toolDetail }) => {
+const ToolsCard: React.FC<ToolsCardProps> = ({
+  toolDetail = { id: 1, title: '', link: '', description: '', tags: [] },
+}) => {
   async function handleDeleteTool(id: number) {
     try {
       await api.delete(`/tools/${id}`);
+      window.location.reload();
     } catch (err) {
       alert('Erro ao deletar a ferramenta, tente novamente.');
     }
   }
 
   return (
-    <Card key={toolDetail.id}>
+    <Card data-testid="container-tools-card" key={toolDetail.id}>
       <header>
         <a href="/">
           <h3>{toolDetail.title}</h3>
@@ -39,6 +42,7 @@ const ToolsCard: React.FC<ToolsCardProps> = ({ toolDetail }) => {
             }
           }}
           className="remove"
+          datatest-id="remove-tool"
         >
           <FiX size={20} />
           remove
