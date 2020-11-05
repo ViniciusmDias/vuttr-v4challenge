@@ -4,6 +4,7 @@ import Loading from '../../components/Loading';
 import ToolsCard from '../../components/ToolsCard';
 import api from '../../services/api';
 import Button from '../../components/Button';
+import { useToast } from '../../hooks/toast';
 
 import {
   Container,
@@ -28,6 +29,7 @@ const Home: React.FC = () => {
   const [checkboxSelected, setCheckboxSelected] = useState(false);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState(false);
+  const { addToast } = useToast();
 
   // modal
   const [title, setTitle] = useState('');
@@ -44,7 +46,7 @@ const Home: React.FC = () => {
       setToolsData(response.data);
     });
     setLoading(false);
-  }, []);
+  }, [tools]);
 
   async function handleSearchTool(value: string): Promise<void> {
     if (checkboxSelected) {
@@ -66,8 +68,7 @@ const Home: React.FC = () => {
     }
   }
 
-  async function handleToggleForm(event: any) {
-    event.preventDefault();
+  function handleToggleForm() {
     if (!form) {
       containerRef.current.style.opacity = '1';
       containerRef.current.style.visibility = 'visible';
@@ -100,13 +101,23 @@ const Home: React.FC = () => {
         tags: tagsArray,
       });
 
-      const responsetool = response.data;
+      const toolAdded = response.data;
 
-      setTools([...tools, responsetool]);
+      console.log(toolAdded);
+
+      setTools([...tools, toolAdded]);
       setTitle('');
       setLink('');
       setDescription('');
       setTags('');
+      handleToggleForm();
+
+      addToast({
+        type: 'success',
+        title: 'Tool added',
+        description:
+          'You added a new tool and it moved to the bottom of the list',
+      });
     } catch (err) {
       console.log(err);
     }
@@ -195,7 +206,14 @@ const Home: React.FC = () => {
           {loading ? (
             <Loading />
           ) : (
-            toolsData.map((tool) => <ToolsCard toolDetail={tool} />)
+            toolsData.map((tool) => (
+              <ToolsCard
+                key={tool.id}
+                toolDetail={tool}
+                tools={tools}
+                setTools={setTools}
+              />
+            ))
           )}
         </ListTools>
       </Container>

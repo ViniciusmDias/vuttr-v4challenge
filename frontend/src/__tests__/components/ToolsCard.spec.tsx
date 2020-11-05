@@ -7,9 +7,10 @@ import ToolsCard, { toolsProps } from '../../components/ToolsCard';
 import api from '../../services/api';
 
 let value: toolsProps;
+let tools: toolsProps[];
+const setTools = jest.fn();
 
 const apiMock = new MockAdapter(api);
-const tools = [{ id: 1 }, { id: 2 }];
 let confirmSpy;
 
 beforeAll(() => {
@@ -22,13 +23,17 @@ describe('ToolsCard component', () => {
     confirmSpy.mockImplementation(jest.fn(() => true));
   });
   it('should be able to render a ToolsCard', () => {
-    const { getAllByTestId } = render(<ToolsCard toolDetail={value} />);
+    const { getAllByTestId } = render(
+      <ToolsCard toolDetail={value} tools={tools} setTools={setTools} />,
+    );
 
     expect(getAllByTestId('container-tools-card')).toBeTruthy();
   });
 
   it('shoud be able to delete a tool', async () => {
-    const { getByText } = render(<ToolsCard toolDetail={value} />);
+    const { getByText } = render(
+      <ToolsCard toolDetail={value} tools={tools} setTools={setTools} />,
+    );
     const buttonElement = getByText('remove');
 
     fireEvent.click(buttonElement);

@@ -3,6 +3,7 @@ import { FiX } from 'react-icons/fi';
 import api from '../../services/api';
 import Button from '../Button';
 import { Card } from './styles';
+import { useToast } from '../../hooks/toast';
 
 export interface toolsProps {
   id: number;
@@ -14,15 +15,26 @@ export interface toolsProps {
 
 export interface ToolsCardProps {
   toolDetail: toolsProps;
+  tools: toolsProps[];
+  setTools: Function;
 }
 
 const ToolsCard: React.FC<ToolsCardProps> = ({
-  toolDetail = { id: 1, title: '', link: '', description: '', tags: [] },
+  toolDetail,
+  tools,
+  setTools,
 }) => {
+  const { addToast } = useToast();
+
   async function handleDeleteTool(id: number) {
     try {
       await api.delete(`/tools/${id}`);
-      window.location.reload();
+      setTools(tools.filter((tool) => tool.id !== id));
+      addToast({
+        type: 'success',
+        title: 'Tool deleted',
+        description: 'You deleted the tool',
+      });
     } catch (err) {
       alert('Erro ao deletar a ferramenta, tente novamente.');
     }
@@ -49,7 +61,10 @@ const ToolsCard: React.FC<ToolsCardProps> = ({
         </Button>
       </header>
       <p>{toolDetail.description}</p>
-      <strong>{toolDetail.tags}</strong>
+      <div>
+        {toolDetail.tags &&
+          toolDetail.tags.map((item) => <strong key={item}>#{item} </strong>)}
+      </div>
     </Card>
   );
 };
